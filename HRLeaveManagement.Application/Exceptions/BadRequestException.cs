@@ -12,7 +12,7 @@ public class BadRequestException : Exception
 
     public BadRequestException(string message, ValidationResult validationResult) : base(message)
     {
-        ValidationErrors.AddRange(validationResult.Errors.Select(x => x.ErrorMessage).ToList());
+        ValidationErrors = validationResult.ToDictionary();
     }
-    public List<string> ValidationErrors { get; set; } = new List<string>();
+    public IDictionary<string, string[]> ValidationErrors { get; set; }
 }

@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace HRLeaveManagement.Persistence;
 public static class PersistenceServiceRegistration
 {
-    public static IServiceCollection AddApplicationService(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddPersistenceService(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<HrDatabaseContext>(options =>
         {
