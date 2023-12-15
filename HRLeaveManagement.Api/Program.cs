@@ -3,6 +3,7 @@ using HRLeaveManagement.Infrastructure;
 using HRLeaveManagement.Persistence;
 using HRLeaveManagement.Identity;
 using System.Reflection;
+using Serilog;
 
 namespace HRLeaveManagement.Api;
 
@@ -13,6 +14,9 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
+        builder.Host.UseSerilog((context, loggerConfig) => 
+            loggerConfig.WriteTo.Console()
+            .ReadFrom.Configuration(context.Configuration));
         builder.Services.AddPersistenceService(builder.Configuration);
         builder.Services.ConfigureInfrastructureServices(builder.Configuration);
         builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly())); ;
@@ -37,6 +41,7 @@ public class Program
             app.UseSwaggerUI();
         }
 
+        app.UseSerilogRequestLogging();
         app.UseHttpsRedirection();
 
         app.UseAuthentication();
