@@ -1,6 +1,7 @@
 using HRLeaveManagement.Application;
 using HRLeaveManagement.Infrastructure;
 using HRLeaveManagement.Persistence;
+using HRLeaveManagement.Identity;
 using System.Reflection;
 
 namespace HRLeaveManagement.Api;
@@ -16,6 +17,7 @@ public class Program
         builder.Services.ConfigureInfrastructureServices(builder.Configuration);
         builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly())); ;
         builder.Services.AddApplicationService();
+        builder.Services.ConfigureIdentityServices(builder.Configuration);
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -37,6 +39,7 @@ public class Program
 
         app.UseHttpsRedirection();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
 
